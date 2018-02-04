@@ -54,11 +54,11 @@ bool TileMapManager::isActive(int x,int y)
         if(((m_currentTileMapManagerPos.y)*1024)-marge < yD && ((m_currentTileMapManagerPos.y+1)*1024)+marge > yU)
         {
             //        std::cout << "y  : " << x << " " << y <<" "<< m_currentTileMapManagerPos.x << " " << m_currentTileMapManagerPos.y << std::endl;
-        //    std::cout << "Active "<< std::endl;
+            //    std::cout << "Active "<< std::endl;
             return true;
         }
     }
-   // std::cout << "Inactive "<< std::endl;
+    // std::cout << "Inactive "<< std::endl;
     return false;
 
 }
@@ -105,11 +105,13 @@ bool TileMapManager::isAccessible(int x,int y)
     }
 
 }
-bool TileMapManager::isActivated(){
-return m_activated;
+bool TileMapManager::isActivated()
+{
+    return m_activated;
 }
-void TileMapManager::setActivated(bool activated){
-m_activated = activated;
+void TileMapManager::setActivated(bool activated)
+{
+    m_activated = activated;
 }
 
 

@@ -6,6 +6,8 @@
 #include <vector>
 #include "Map.h"
 #include "InputManager.h"
+#include <iostream>
+#include <fstream>
 
 using namespace sf;
 
@@ -107,7 +109,7 @@ int main()
         7,6,4,6,6,7,7,7,7,7,7,7,7,7,7,7,
         7,6,4,6,7,7,7,7,7,7,7,7,7,7,7,7
     };
-std::vector<int> leveltest =
+    std::vector<int> leveltest =
     {
 
         6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
@@ -131,26 +133,57 @@ std::vector<int> leveltest =
 
     std::cout << "creation de l object Map" << std::endl;
     Map mapManager;
+    mapManager.loadMap();
     //std::cout << "creation de l object TileMapManager" << std::end;
+    /*td::ofstream fichier("File/MapPackage.tml", std::ios::out | std::ios::trunc);
+     if(fichier){
+     for(int i=0; i<32; i++)
+     {
+         for(int i2=0; i2<32; i2++)
+         {
+             fichier << "6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6," << std::endl;
+             fichier << "6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+             fichier << "6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6," << std::endl;
+             fichier << "6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6," << std::endl;
+         }
+     }
+     }*/
 
 
-    mapManager.addTileMapManager(new TileMapManager("image.png",Vector2u(64,64),level00,16,16,0,0),0,0);
-    mapManager.addTileMapManager(new TileMapManager("image.png",Vector2u(64,64),level01,16,16,0,1),0,1);
-    mapManager.addTileMapManager(new TileMapManager("image.png",Vector2u(64,64),level10,16,16,1,0),1,0);
-    mapManager.addTileMapManager(new TileMapManager("image.png",Vector2u(64,64),level10,16,16,1,1),1,1);
 
-    for(int i=2;i<32;i++){
-        for(int i2=0;i2<32;i2++){
-        mapManager.addTileMapManager(new TileMapManager("image.png",Vector2u(64,64),leveltest,16,16,i,i2),i,i2);
+    /* mapManager.addTileMapManager(new TileMapManager("File/image.png",Vector2u(64,64),level00,16,16,0,0),0,0);
+    mapManager.addTileMapManager(new TileMapManager("File/image.png",Vector2u(64,64),level01,16,16,0,1),0,1);
+     mapManager.addTileMapManager(new TileMapManager("File/image.png",Vector2u(64,64),level10,16,16,1,0),1,0);
+     mapManager.addTileMapManager(new TileMapManager("File/image.png",Vector2u(64,64),level10,16,16,1,1),1,1);
 
-    }
-    }
-for(int i=0;i<2;i++){
-        for(int i2=2;i2<32;i2++){
-        mapManager.addTileMapManager(new TileMapManager("image.png",Vector2u(64,64),leveltest,16,16,i,i2),i,i2);
+     for(int i=2; i<32; i++)
+     {
+         for(int i2=0; i2<32; i2++)
+         {
+             mapManager.addTileMapManager(new TileMapManager("File/image.png",Vector2u(64,64),leveltest,16,16,i,i2),i,i2);
 
-    }
-    }
+         }
+     }
+     for(int i=0; i<2; i++)
+     {
+         for(int i2=2; i2<32; i2++)
+         {
+             mapManager.addTileMapManager(new TileMapManager("File/image.png",Vector2u(64,64),leveltest,16,16,i,i2),i,i2);
+
+         }
+     }*/
 
     mapManager.changeCurrentTileMapManager(0,0);
     mapManager.getCurrentTileMapManager()->getTileMap()->setPosition(0,0);
@@ -202,7 +235,7 @@ for(int i=0;i<2;i++){
         for(int i=0; i<mapManager.getTileMapManagerToDraw().size(); i++)
         {
 
-          //  std::cout <<  mapManager.getTileMapManagerToDraw()[i]->getIndex() << " vrai ID : "<< i << std::endl;
+            //  std::cout <<  mapManager.getTileMapManagerToDraw()[i]->getIndex() << " vrai ID : "<< i << std::endl;
             TileMapManager tile = *mapManager.getTileMapManagerToDraw()[i];
 
             if(!tile.isActive(player.getPosition().x,player.getPosition().y))

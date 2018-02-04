@@ -5,6 +5,8 @@
 #include "TileMapManager.h"
 #include <string.h>
 #include "SFML/Graphics.hpp"
+#include <iostream>
+#include <fstream>
 
 class Map
 {
@@ -22,6 +24,7 @@ public :
     TileMapManager* getTileMap(int x,int y);
     void removeTileFromDraw(int index);
     void checkVisibility(int x,int y);
+    void loadMap();
 
 private :
 

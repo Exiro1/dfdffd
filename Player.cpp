@@ -15,7 +15,7 @@ Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapM
     m_argent = argent;
     m_oldDir = Direction::EST;
 
-    if(m_playerSprite->load("perso.png"))
+    if(m_playerSprite->load("File/perso.png"))
     {
         std::cout << "charger" << std::endl;
 
@@ -39,8 +39,9 @@ Direction Player::getOldDir()
 {
     return m_oldDir;
 }
-void Player::setNewDir(Direction newDir){
-m_oldDir = newDir;
+void Player::setNewDir(Direction newDir)
+{
+    m_oldDir = newDir;
 }
 void Player::update(float deltaTime)
 {

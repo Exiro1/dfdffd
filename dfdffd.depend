@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1516809374 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\main.cpp
+1516837826 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\main.cpp
 	<iostream>
 	<SFML/Graphics.hpp>
 	"TileMap.h"
@@ -8,6 +8,8 @@
 	<vector>
 	"Map.h"
 	"InputManager.h"
+	<iostream>
+	<fstream>
 
 1486736397 c:\users\cococ\desktop\dev\c-c++\bibliotheque\sfml-2.4.2\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -411,7 +413,7 @@
 	<string.h>
 	<vector>
 
-1516808340 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\player.cpp
+1516834012 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\player.cpp
 	"Player.h"
 	<iostream>
 
@@ -431,22 +433,27 @@
 	<iostream>
 	<vector>
 
-1516466076 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\tilemapmanager.cpp
+1516834012 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\tilemapmanager.cpp
 	"TileMapManager.h"
 
-1516462230 c:\users\cococ\desktop\dev\c-c++\dfdffd\map.h
+1516834166 c:\users\cococ\desktop\dev\c-c++\dfdffd\map.h
 	<vector>
 	"TileMapManager.h"
 	<string.h>
 	"SFML/Graphics.hpp"
+	<iostream>
+	<fstream>
 
-1516563961 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\map.cpp
+1516837660 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\map.cpp
 	"Map.h"
+	<iostream>
+	<fstream>
+	"SFML/Graphics.hpp"
 
-1516809331 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.cpp
+1516834012 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.cpp
 	"InputManager.h"
 
-1516809278 c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.h
+1516809468 c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.h
 	"Player.h"
 	"Map.h"
 	"SFML/Graphics.hpp"
