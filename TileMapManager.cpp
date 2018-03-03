@@ -14,6 +14,7 @@ TileMapManager::TileMapManager(const std::string& tileset, sf::Vector2u tileSize
     for(int i= 0; i < 32; i++)
     {
         m_TileMap2D.push_back(std::vector<int>(32));
+        m_TileMap2DEntity.push_back(std::vector<int>(32));
     }
     std::cout << "map 2D initilaliseé" << std::endl;
     for(int x=0; x<16; x++)
@@ -26,6 +27,7 @@ TileMapManager::TileMapManager(const std::string& tileset, sf::Vector2u tileSize
                 for(int y2=0; y2<2; y2++)
                 {
                     //    std::cout << x*2+x2 << " "<< y*2+y2 << ":" << valeur<<std::endl;
+                    m_TileMap2DEntity[x*2+x2][y*2+y2] = 0;
                     m_TileMap2D[x*2+x2][y*2+y2] = valeur;
                 }
             }
@@ -38,7 +40,6 @@ TileMapManager::TileMapManager(const std::string& tileset, sf::Vector2u tileSize
     }
 
 }
-
 
 bool TileMapManager::isActive(int x,int y)
 {
@@ -72,7 +73,10 @@ void TileMapManager::setIndex(int index)
 {
     m_index = index;
 }
-
+void TileMapManager::updateEntityCase(int x,int y,int type)
+{
+    m_TileMap2DEntity[x][y] = type;
+}
 TileMap* TileMapManager::getTileMap()
 {
     return &m_tileMap;
@@ -85,17 +89,25 @@ std::vector<std::vector<int> > TileMapManager::getTileMap2D()
 {
     return m_TileMap2D;
 }
+std::vector<std::vector<int> > TileMapManager::getTileMap2DEntity()
+{
+    return m_TileMap2DEntity;
+}
 sf::Vector2i TileMapManager::getTilePos()
 {
     return m_currentTileMapManagerPos;
 }
 bool TileMapManager::isAccessible(int x,int y)
 {
+
     if(x<32*(m_currentTileMapManagerPos.x+1) && x>32*(m_currentTileMapManagerPos.x)-1 && y <32*(m_currentTileMapManagerPos.y+1) && y > 32*(m_currentTileMapManagerPos.y)-1)
     {
         int type = m_TileMap2D[y-(32*m_currentTileMapManagerPos.y)][x-(32*m_currentTileMapManagerPos.x)];
-        if(type == 7 || type == 8 || type ==9)
+        int entity = m_TileMap2DEntity[x-(32*m_currentTileMapManagerPos.x)][y-(32*m_currentTileMapManagerPos.y)];
+        if(type == 7 || type == 8 || type == 9 || entity != 0){
+            std::cout << entity << std::endl;
             return false;
+        }
 
         return true;
     }

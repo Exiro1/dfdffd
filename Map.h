@@ -25,6 +25,7 @@ public :
     void removeTileFromDraw(int index);
     void checkVisibility(int x,int y);
     void loadMap();
+    std::vector<std::vector<TileMapManager*> > getTileMapList(){return m_tileMapList;}
 
 private :
 

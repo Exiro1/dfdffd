@@ -12,16 +12,16 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-std=c++14" />
+					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add option="-g" />
-					<Add option="-DSFML_STATIC" />
-					<Add directory="C:/Users/cococ/Desktop/dev/C-C++/Bibliotheque/SFML-2.4.2/include" />
+					<Add directory="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/include" />
 				</Compiler>
 				<Linker>
-					<Add library="C:/Users/cococ/Desktop/dev/C-C++/Bibliotheque/SFML-2.4.2/lib/libsfml-graphics-d.a" />
-					<Add library="C:/Users/cococ/Desktop/dev/C-C++/Bibliotheque/SFML-2.4.2/lib/libsfml-window-d.a" />
-					<Add library="C:/Users/cococ/Desktop/dev/C-C++/Bibliotheque/SFML-2.4.2/lib/libsfml-system-d.a" />
-					<Add directory="C:/Users/cococ/Desktop/dev/C-C++/Bibliotheque/SFML-2.4.2/lib" />
+					<Add library="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib/libsfml-graphics-d.a" />
+					<Add library="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib/libsfml-window-d.a" />
+					<Add library="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib/libsfml-system-d.a" />
+					<Add directory="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -29,18 +29,31 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option projectCompilerOptionsRelation="0" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
+					<Add directory="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
+					<Add library="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib/libsfml-graphics.a" />
+					<Add library="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib/libsfml-window.a" />
+					<Add library="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib/libsfml-system.a" />
+					<Add directory="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
+			<Add directory="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/include" />
 		</Compiler>
+		<Linker>
+			<Add directory="C:/Users/cococ/Desktop/dev/C-C++/dfdffd/SFML/lib" />
+		</Linker>
+		<Unit filename="GameManager.cpp" />
+		<Unit filename="GameManager.h" />
 		<Unit filename="InputManager.cpp" />
 		<Unit filename="InputManager.h" />
 		<Unit filename="Map.cpp" />
@@ -54,17 +67,6 @@
 		<Unit filename="TileMapManager.cpp" />
 		<Unit filename="TileMapManager.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="openal32.dll" />
-		<Unit filename="sfml-audio-2.dll" />
-		<Unit filename="sfml-audio-d-2.dll" />
-		<Unit filename="sfml-graphics-2.dll" />
-		<Unit filename="sfml-graphics-d-2.dll" />
-		<Unit filename="sfml-network-2.dll" />
-		<Unit filename="sfml-network-d-2.dll" />
-		<Unit filename="sfml-system-2.dll" />
-		<Unit filename="sfml-system-d-2.dll" />
-		<Unit filename="sfml-window-2.dll" />
-		<Unit filename="sfml-window-d-2.dll" />
 		<Extensions>
 			<code_completion />
 			<envvars />

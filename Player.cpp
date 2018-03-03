@@ -2,9 +2,8 @@
 #include <iostream>
 
 
-Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager) :  m_playerSprite(0),m_moving(false),m_speed(150.0f)
+Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager* tileMapManager,std::string file,int ID) :  m_playerSprite(0),m_moving(false),m_speed(150.0f)
 {
-
     m_tileMapManager = tileMapManager;
     m_playerSprite = new PlayerSprite();
     m_name = name;
@@ -13,18 +12,25 @@ Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapM
     m_posCaseDir = m_posCase;
     m_vie = vie;
     m_argent = argent;
+    m_ID = ID;
     m_oldDir = Direction::EST;
 
-    if(m_playerSprite->load("File/perso.png"))
+    if(m_playerSprite->load(file))
     {
         std::cout << "charger" << std::endl;
-
-
     }
     m_playerSprite->setOrigin(16,16);
     m_playerSprite->setPosition(m_pos);
+    m_tileMapManager->updateEntityCase(m_posCase.x,m_posCase.y,m_ID);
+}
 
 
+TileMapManager* Player::getTileMap(){
+return m_tileMapManager;
+}
+
+void Player::setTileMap(TileMapManager* tileMap){
+m_tileMapManager = tileMap;
 }
 
 PlayerSprite Player::getSprite()
@@ -114,13 +120,16 @@ void Player::update(float deltaTime)
 }
 int Player::getGround()
 {
-    return m_tileMapManager->getTileMap2D()[m_posCase.y][m_posCase.x];
+
+        return m_tileMapManager->getTileMap2D()[m_posCase.y][m_posCase.x];
 }
 
 void Player::addCaseDir(int x, int y)
 {
+    m_tileMapManager->updateEntityCase(m_posCase.x,m_posCase.y,0);
     m_posCaseDir.x+=x;
     m_posCaseDir.y+=y;
+    m_tileMapManager->updateEntityCase(m_posCaseDir.x,m_posCaseDir.y,m_ID);
 }
 sf::Vector2f Player::getPosition()
 {
@@ -142,6 +151,27 @@ sf::Vector2f Player::caseToPosition(sf::Vector2i case1)
 bool Player::getMoving()
 {
     return m_moving;
+}
+
+int Player::getFrontType(Direction newDir){
+    int type;
+
+switch(newDir){
+
+case Direction::EST:
+    type = m_tileMapManager->getTileMap2D()[m_posCase.y][m_posCase.x+1];
+    break;
+case Direction::OUEST:
+    type = m_tileMapManager->getTileMap2D()[m_posCase.y][m_posCase.x-1];
+    break;
+case Direction::NORD:
+    type = m_tileMapManager->getTileMap2D()[m_posCase.y-1][m_posCase.x];
+    break;
+case Direction::SUD:
+    type = m_tileMapManager->getTileMap2D()[m_posCase.y+1][m_posCase.x];
+    break;
+}
+return type;
 }
 
 Player::~Player()

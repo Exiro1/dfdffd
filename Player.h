@@ -16,8 +16,7 @@ class Player
 
 public :
 
-    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager );
-
+    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager ,std::string file,int ID);
 
     PlayerSprite getSprite();
     sf::Vector2f getPosition();
@@ -32,6 +31,9 @@ public :
     void setMoving(bool moving);
     bool getMoving();
     int getGround();
+    int getFrontType(Direction newDir);
+    TileMapManager* getTileMap();
+    void setTileMap(TileMapManager* tileMap);
 
 
 private :
@@ -43,6 +45,7 @@ private :
     int m_vie;
     float m_speed;
     int m_argent;
+    int m_ID;
     PlayerSprite *m_playerSprite;
     bool m_moving;
     TileMapManager *m_tileMapManager;
