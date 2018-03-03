@@ -104,8 +104,9 @@ bool TileMapManager::isAccessible(int x,int y)
     {
         int type = m_TileMap2D[y-(32*m_currentTileMapManagerPos.y)][x-(32*m_currentTileMapManagerPos.x)];
         int entity = m_TileMap2DEntity[x-(32*m_currentTileMapManagerPos.x)][y-(32*m_currentTileMapManagerPos.y)];
-        if(type == 7 || type == 8 || type == 9 || entity != 0){
-            std::cout << entity << std::endl;
+        if(type == 7 || type == 8 || type == 9 || entity != 0)
+        {
+            //   std::cout << entity << std::endl;
             return false;
         }
 

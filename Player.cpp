@@ -7,7 +7,8 @@ Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapM
     m_tileMapManager = tileMapManager;
     m_playerSprite = new PlayerSprite();
     m_name = name;
-    m_posCase = posCase;
+    m_posCase.x = m_tileMapManager->getTilePos().x*32+posCase.x;
+    m_posCase.y = m_tileMapManager->getTilePos().y*32+posCase.y;
     m_pos = caseToPosition(m_posCase);
     m_posCaseDir = m_posCase;
     m_vie = vie;
@@ -21,16 +22,18 @@ Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapM
     }
     m_playerSprite->setOrigin(16,16);
     m_playerSprite->setPosition(m_pos);
-    m_tileMapManager->updateEntityCase(m_posCase.x,m_posCase.y,m_ID);
+    m_tileMapManager->updateEntityCase(getCaseRelative(m_posCase).x,getCaseRelative(m_posCase).y,m_ID);
 }
 
 
-TileMapManager* Player::getTileMap(){
-return m_tileMapManager;
+TileMapManager* Player::getTileMap()
+{
+    return m_tileMapManager;
 }
 
-void Player::setTileMap(TileMapManager* tileMap){
-m_tileMapManager = tileMap;
+void Player::setTileMap(TileMapManager* tileMap)
+{
+    m_tileMapManager = tileMap;
 }
 
 PlayerSprite Player::getSprite()
@@ -121,15 +124,15 @@ void Player::update(float deltaTime)
 int Player::getGround()
 {
 
-        return m_tileMapManager->getTileMap2D()[m_posCase.y][m_posCase.x];
+    return m_tileMapManager->getTileMap2D()[m_posCase.y][m_posCase.x];
 }
 
 void Player::addCaseDir(int x, int y)
 {
-    m_tileMapManager->updateEntityCase(m_posCase.x,m_posCase.y,0);
+
     m_posCaseDir.x+=x;
     m_posCaseDir.y+=y;
-    m_tileMapManager->updateEntityCase(m_posCaseDir.x,m_posCaseDir.y,m_ID);
+
 }
 sf::Vector2f Player::getPosition()
 {
@@ -147,45 +150,59 @@ sf::Vector2f Player::caseToPosition(sf::Vector2i case1)
 {
     return sf::Vector2f(case1.x*32+16,case1.y*32+16);
 }
+sf::Vector2i Player::getCaseRelative(sf::Vector2i pos)
+{
+    int x = pos.x-m_tileMapManager->getTilePos().x*32;
+    int y = pos.y-m_tileMapManager->getTilePos().y*32;
+    return sf::Vector2i(x,y);
+}
+sf::Vector2i Player::getCaseRelative(sf::Vector2i pos,TileMapManager* tmap)
+{
+    int x = pos.x-tmap->getTilePos().x*32;
+    int y = pos.y-tmap->getTilePos().y*32;
+    return sf::Vector2i(x,y);
+}
 
 bool Player::getMoving()
 {
     return m_moving;
 }
 
-int Player::getFrontType(Direction newDir){
+int Player::getFrontType(Direction newDir,TileMapManager* tmap)
+{
     int type;
+    int y = getCaseRelative(m_posCase,tmap).y;
+    int x = getCaseRelative(m_posCase,tmap).x;
 
-switch(newDir){
+    switch(newDir)
+    {
 
-case Direction::EST:
-    type = m_tileMapManager->getTileMap2D()[m_posCase.y][m_posCase.x+1];
-    break;
-case Direction::OUEST:
-    type = m_tileMapManager->getTileMap2D()[m_posCase.y][m_posCase.x-1];
-    break;
-case Direction::NORD:
-    type = m_tileMapManager->getTileMap2D()[m_posCase.y-1][m_posCase.x];
-    break;
-case Direction::SUD:
-    type = m_tileMapManager->getTileMap2D()[m_posCase.y+1][m_posCase.x];
-    break;
-}
-return type;
+    case Direction::EST:
+        type = tmap->getTileMap2D()[y][x+1];
+        if(tmap->getTileMap2DEntity()[x+1][y] != 0)
+            type = tmap->getTileMap2DEntity()[x+1][y];
+        break;
+    case Direction::OUEST:
+        type = tmap->getTileMap2D()[y][x-1];
+        if(tmap->getTileMap2DEntity()[x-1][y] != 0)
+            type = tmap->getTileMap2DEntity()[x-1][y];
+        break;
+    case Direction::NORD:
+        type = tmap->getTileMap2D()[y-1][x];
+        if(tmap->getTileMap2DEntity()[x][y-1] != 0)
+            type = tmap->getTileMap2DEntity()[x][y-1];
+        break;
+    case Direction::SUD:
+        type = tmap->getTileMap2D()[y+1][x];
+        if(tmap->getTileMap2DEntity()[x][y+1] != 0)
+            type = tmap->getTileMap2DEntity()[x][y+1];
+        break;
+    }
+    return type;
 }
 
 Player::~Player()
 {
-
     delete m_playerSprite;
     m_playerSprite = 0;
-
 }
-
-
-
-
-
-
-
-

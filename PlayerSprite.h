@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class PlayerSprite : public sf::Drawable , public sf::Transformable
+class PlayerSprite : public sf::Drawable, public sf::Transformable
 {
 
 public :

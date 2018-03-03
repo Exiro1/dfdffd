@@ -16,12 +16,18 @@ class Player
 
 public :
 
-    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager ,std::string file,int ID);
+    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID);
 
     PlayerSprite getSprite();
     sf::Vector2f getPosition();
     sf::Vector2i getCase();
+    sf::Vector2i getCaseRelative(sf::Vector2i pos);
+    sf::Vector2i getCaseRelative(sf::Vector2i pos,TileMapManager* tmap);
     sf::Vector2i getCaseDir();
+    int getID()
+    {
+        return m_ID;
+    }
     Direction getOldDir();
     void setNewDir(Direction newDir);
     sf::Vector2f caseToPosition(sf::Vector2i m_posCase);
@@ -31,9 +37,10 @@ public :
     void setMoving(bool moving);
     bool getMoving();
     int getGround();
-    int getFrontType(Direction newDir);
+    int getFrontType(Direction newDir,TileMapManager* tmap);
     TileMapManager* getTileMap();
     void setTileMap(TileMapManager* tileMap);
+
 
 
 private :

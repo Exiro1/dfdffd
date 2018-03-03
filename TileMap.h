@@ -5,7 +5,7 @@
 #include <string.h>
 #include <vector>
 
-class TileMap : public sf::Drawable , public sf::Transformable
+class TileMap : public sf::Drawable, public sf::Transformable
 {
 
 public :

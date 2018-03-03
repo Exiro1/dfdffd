@@ -28,10 +28,10 @@ protected:
 
 private:
 
-Player* m_player;
-Map* m_mapManager;
-sf::View m_PlayerView;
-std::vector<Player*> m_playerList;
+    Player* m_player;
+    Map* m_mapManager;
+    sf::View m_PlayerView;
+    std::vector<Player*> m_playerList;
 
 
 };

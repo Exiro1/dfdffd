@@ -136,19 +136,7 @@ void Map::checkVisibility(int x2,int y2)
                         std::cout << "Activate " << tm->getIndex() << " " << tm->getTilePos().x << " " << tm->getTilePos().y << std::endl;
                     }
                 }
-
             }
         }
     }
-
-
-
-
-
-
-
-
-
 }
-
-

@@ -14,32 +14,32 @@ using namespace sf;
 
 //generation du fichier map
 
- //std::cout << "creation de l object TileMapManager" << std::end;
-    /*td::ofstream fichier("File/MapPackage.tml", std::ios::out | std::ios::trunc);
-     if(fichier){
-     for(int i=0; i<32; i++)
+//std::cout << "creation de l object TileMapManager" << std::end;
+/*td::ofstream fichier("File/MapPackage.tml", std::ios::out | std::ios::trunc);
+ if(fichier){
+ for(int i=0; i<32; i++)
+ {
+     for(int i2=0; i2<32; i2++)
      {
-         for(int i2=0; i2<32; i2++)
-         {
-             fichier << "6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6," << std::endl;
-             fichier << "6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
-             fichier << "6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6," << std::endl;
-             fichier << "6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6," << std::endl;
-         }
+         fichier << "6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6," << std::endl;
+         fichier << "6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,6,6,6,6,6,6,6,6,6,6,6,6,5,6," << std::endl;
+         fichier << "6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6," << std::endl;
+         fichier << "6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6," << std::endl;
      }
-     }*/
+ }
+ }*/
 
 Direction manageDir(Player &player,Map &mapManager,Direction newDir);
 
@@ -88,27 +88,27 @@ int main()
                 window.close();
         }
 
-       // keyboardManager(player,mapManager);
-     //   player.update(t.asSeconds());
+        // keyboardManager(player,mapManager);
+        //   player.update(t.asSeconds());
 
-      //  view1.setCenter(player.getPosition());
+        //  view1.setCenter(player.getPosition());
         gm.update(t);
         t = clock.restart();
 
         window.clear();
         window.setView(*gm.getView());
 
-         gm.getMapManager()->checkVisibility(gm.getPlayer()->getPosition().x,gm.getPlayer()->getPosition().y); // ajoute les tiles visible
+        gm.getMapManager()->checkVisibility(gm.getPlayer()->getPosition().x,gm.getPlayer()->getPosition().y); // ajoute les tiles visible
         for(int i=0; i< gm.getMapManager()->getTileMapManagerToDraw().size(); i++)
         {
             TileMapManager tile = *gm.getMapManager()->getTileMapManagerToDraw()[i];
             if(!tile.isActive(gm.getPlayer()->getPosition().x,gm.getPlayer()->getPosition().y))
             {
-                 gm.getMapManager()->removeTileFromDraw(tile.getIndex());
+                gm.getMapManager()->removeTileFromDraw(tile.getIndex());
                 std::cout << tile.getIndex() << " removed Position : " << tile.getTilePos().x << " , " <<tile.getTilePos().y << std::endl;
                 i = i-1;
             }
-        else
+            else
             {
                 tile.getTileMap()->setPosition(tile.getTilePos().x*1024,tile.getTilePos().y*1024);
                 window.draw(*tile.getTileMap());
@@ -122,9 +122,11 @@ int main()
         window.draw(gm.getPlayer()->getSprite());
         gm.getPlayer()->getTileMap()->getTilePos();
 
-        for(int i =0; i<gm.getPlayerList().size();i++){
-
-            if(gm.getPlayerList()[i]->getTileMap() == gm.getPlayer()->getTileMap()){
+        for(int i =0; i<gm.getPlayerList().size(); i++)
+        {
+            if(gm.getPlayerList()[i]->getTileMap()->isActivated())
+            {
+                //  std::cout << gm.getPlayerList()[i]->getTileMap() << " : "<< gm.getPlayer()->getTileMap() << std::endl;
                 window.draw(gm.getPlayerList()[i]->getSprite());
             }
         }
@@ -137,32 +139,3 @@ int main()
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
