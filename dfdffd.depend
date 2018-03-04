@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1520111291 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\main.cpp
+1520181089 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\main.cpp
 	<iostream>
 	<SFML/Graphics.hpp>
 	"TileMap.h"
@@ -403,22 +403,22 @@
 1515600302 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\playersprite.cpp
 	"PlayerSprite.h"
 
-1519895261 c:\users\cococ\desktop\dev\c-c++\dfdffd\playersprite.h
+1520114008 c:\users\cococ\desktop\dev\c-c++\dfdffd\playersprite.h
 	<SFML/Graphics.hpp>
 
 1515605956 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\tilemap.cpp
 	"TileMap.h"
 
-1515605834 c:\users\cococ\desktop\dev\c-c++\dfdffd\tilemap.h
+1520114008 c:\users\cococ\desktop\dev\c-c++\dfdffd\tilemap.h
 	<SFML/Graphics.hpp>
 	<string.h>
 	<vector>
 
-1520113145 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\player.cpp
+1520181693 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\player.cpp
 	"Player.h"
 	<iostream>
 
-1520113110 c:\users\cococ\desktop\dev\c-c++\dfdffd\player.h
+1520180298 c:\users\cococ\desktop\dev\c-c++\dfdffd\player.h
 	<iostream>
 	<string>
 	<SFML/Graphics.hpp>
@@ -426,6 +426,7 @@
 	"TileMapManager.h"
 	"Map.h"
 	"SFML/Window.hpp"
+	"MovePattern.h"
 
 1520095521 c:\users\cococ\desktop\dev\c-c++\dfdffd\tilemapmanager.h
 	"TileMap.h"
@@ -434,10 +435,10 @@
 	<iostream>
 	<vector>
 
-1520111141 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\tilemapmanager.cpp
+1520114008 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\tilemapmanager.cpp
 	"TileMapManager.h"
 
-1520021374 c:\users\cococ\desktop\dev\c-c++\dfdffd\map.h
+1520114008 c:\users\cococ\desktop\dev\c-c++\dfdffd\map.h
 	<vector>
 	"TileMapManager.h"
 	<string.h>
@@ -445,13 +446,13 @@
 	<iostream>
 	<fstream>
 
-1516837986 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\map.cpp
+1520114185 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\map.cpp
 	"Map.h"
 	<iostream>
 	<fstream>
 	"SFML/Graphics.hpp"
 
-1520113348 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.cpp
+1520113929 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.cpp
 	"InputManager.h"
 
 1516809468 c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.h
@@ -1624,13 +1625,20 @@
 	<string>
 	<vector>
 
-1520111187 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\gamemanager.cpp
+1520181200 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\gamemanager.cpp
 	"GameManager.h"
 
-1520019276 c:\users\cococ\desktop\dev\c-c++\dfdffd\gamemanager.h
+1520114008 c:\users\cococ\desktop\dev\c-c++\dfdffd\gamemanager.h
 	"Map.h"
 	"Player.h"
 	"InputManager.h"
 	<SFML/Graphics.hpp>
 	<vector>
+
+1520181617 c:\users\cococ\desktop\dev\c-c++\dfdffd\movepattern.h
+	<vector>
+	<SFML/Graphics.hpp>
+
+1520181636 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\movepattern.cpp
+	"MovePattern.h"
 

@@ -62,7 +62,7 @@ int main()
     mapManager.changeCurrentTileMapManager(0,0);
     mapManager.getCurrentTileMapManager()->getTileMap()->setPosition(0,0);
     std::cout << "object TileMapManager ajouté a Map" << std::endl;
-    Player p("Exiro",sf::Vector2i(4,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png",1);
+    Player p("Exiro",sf::Vector2i(4,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png",1,false);
     GameManager gm(&p,&mapManager);
 
     Clock clock;
@@ -93,7 +93,7 @@ int main()
 
         //  view1.setCenter(player.getPosition());
         gm.update(t);
-        t = clock.restart();
+
 
         window.clear();
         window.setView(*gm.getView());
@@ -124,13 +124,18 @@ int main()
 
         for(int i =0; i<gm.getPlayerList().size(); i++)
         {
+
+            if(gm.getPlayerList()[i]->isBot()){
+                gm.getPlayerList()[i]->moveBot();
+                   gm.getPlayerList()[i]->update(t.asSeconds());
+            }
             if(gm.getPlayerList()[i]->getTileMap()->isActivated())
             {
                 //  std::cout << gm.getPlayerList()[i]->getTileMap() << " : "<< gm.getPlayer()->getTileMap() << std::endl;
                 window.draw(gm.getPlayerList()[i]->getSprite());
             }
         }
-
+t = clock.restart();
         window.display();
 
     }

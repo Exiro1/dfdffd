@@ -9,6 +9,8 @@
 #include "TileMapManager.h"
 #include "Map.h"
 #include "SFML/Window.hpp"
+#include "MovePattern.h"
+
 enum class Direction {EST,OUEST,NORD,SUD};
 
 class Player
@@ -16,7 +18,8 @@ class Player
 
 public :
 
-    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID);
+    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID,bool isBot);
+    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID,bool isBot,std::vector<sf::Vector2i> Pattern);
 
     PlayerSprite getSprite();
     sf::Vector2f getPosition();
@@ -40,7 +43,8 @@ public :
     int getFrontType(Direction newDir,TileMapManager* tmap);
     TileMapManager* getTileMap();
     void setTileMap(TileMapManager* tileMap);
-
+    bool isBot(){return m_bot;}
+    void moveBot();
 
 
 private :
@@ -58,6 +62,9 @@ private :
     TileMapManager *m_tileMapManager;
     sf::Vector2i m_posCaseDir;
     Direction m_oldDir;
+    bool m_bot;
+    MovePattern m_movePattern;
+
 
 };
 

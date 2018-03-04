@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager* tileMapManager,std::string file,int ID) :  m_playerSprite(0),m_moving(false),m_speed(150.0f)
+Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager* tileMapManager,std::string file,int ID,bool isBot) : m_movePattern(std::vector<sf::Vector2i>()),m_playerSprite(0),m_moving(false),m_speed(150.0f)
 {
     m_tileMapManager = tileMapManager;
     m_playerSprite = new PlayerSprite();
@@ -15,7 +15,29 @@ Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapM
     m_argent = argent;
     m_ID = ID;
     m_oldDir = Direction::EST;
-
+    m_bot = isBot;
+    if(m_playerSprite->load(file))
+    {
+        std::cout << "charger" << std::endl;
+    }
+    m_playerSprite->setOrigin(16,16);
+    m_playerSprite->setPosition(m_pos);
+    m_tileMapManager->updateEntityCase(getCaseRelative(m_posCase).x,getCaseRelative(m_posCase).y,m_ID);
+}
+Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager* tileMapManager,std::string file,int ID,bool isBot,std::vector<sf::Vector2i> Pattern) :  m_movePattern(Pattern),m_playerSprite(0),m_moving(false),m_speed(150.0f)
+{
+    m_tileMapManager = tileMapManager;
+    m_playerSprite = new PlayerSprite();
+    m_name = name;
+    m_posCase.x = m_tileMapManager->getTilePos().x*32+posCase.x;
+    m_posCase.y = m_tileMapManager->getTilePos().y*32+posCase.y;
+    m_pos = caseToPosition(m_posCase);
+    m_posCaseDir = m_posCase;
+    m_vie = vie;
+    m_argent = argent;
+    m_ID = ID;
+    m_oldDir = Direction::EST;
+    m_bot = isBot;
     if(m_playerSprite->load(file))
     {
         std::cout << "charger" << std::endl;
@@ -200,6 +222,34 @@ int Player::getFrontType(Direction newDir,TileMapManager* tmap)
     }
     return type;
 }
+
+
+void Player::moveBot()
+{
+    if(m_pos == this->caseToPosition(this->getCaseDir()))
+    {
+        sf::Vector2i v = m_movePattern.getNextCase();
+
+        if(this->getTileMap()->isAccessible(m_posCase.x+v.x,m_posCase.y+v.y))
+        {
+            this->getTileMap()->updateEntityCase(getCaseRelative(this->getCase()).x,this->getCaseRelative(this->getCase()).y,0);
+            this->addCaseDir(v.x,v.y);
+            m_movePattern.add();
+            this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCaseDir()).x,this->getCaseRelative(this->getCaseDir()).y,this->getID());
+            if(v.x == 1)
+                this->setNewDir(Direction::EST);
+            if(v.x == -1)
+                this->setNewDir(Direction::OUEST);
+            if(v.y == 1)
+                this->setNewDir(Direction::SUD);
+            if(v.y == -1)
+                this->setNewDir(Direction::NORD);
+        }
+    }
+}
+
+
+
 
 Player::~Player()
 {
