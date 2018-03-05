@@ -14,12 +14,13 @@ sf::Vector2i MovePattern::getNextCase()
     sf::Vector2i nextDir = m_pattern[m_currentIndex];
     return nextDir;
 }
-void MovePattern::setPattern(std::vector<sf::Vector2i> newPattern){
+void MovePattern::setPattern(std::vector<sf::Vector2i> newPattern)
+{
     m_pattern = newPattern;
 }
 void MovePattern::add()
 {
-m_currentIndex++;
+    m_currentIndex++;
     if(m_currentIndex==m_pattern.size())
         m_currentIndex = 0;
 }

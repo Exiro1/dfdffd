@@ -12,7 +12,10 @@ public:
     MovePattern(std::vector<sf::Vector2i> pattern);
     ~MovePattern();
     sf::Vector2i getNextCase();
-    std::vector<sf::Vector2i> getPattern(){return m_pattern;};
+    std::vector<sf::Vector2i> getPattern()
+    {
+        return m_pattern;
+    };
     void setPattern(std::vector<sf::Vector2i> newPattern);
     void add();
 

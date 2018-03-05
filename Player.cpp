@@ -2,8 +2,10 @@
 #include <iostream>
 
 
-Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager* tileMapManager,std::string file,int ID,bool isBot) : m_movePattern(std::vector<sf::Vector2i>()),m_playerSprite(0),m_moving(false),m_speed(150.0f)
+Player::Player(Map* mapManager,std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager* tileMapManager,std::string file,int ID,bool isBot) :m_mapManager(0), m_movePattern(std::vector<sf::Vector2i>()),m_playerSprite(0),m_moving(false),m_speed(150.0f)
 {
+
+    m_mapManager = mapManager;
     m_tileMapManager = tileMapManager;
     m_playerSprite = new PlayerSprite();
     m_name = name;
@@ -24,8 +26,9 @@ Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapM
     m_playerSprite->setPosition(m_pos);
     m_tileMapManager->updateEntityCase(getCaseRelative(m_posCase).x,getCaseRelative(m_posCase).y,m_ID);
 }
-Player::Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager* tileMapManager,std::string file,int ID,bool isBot,std::vector<sf::Vector2i> Pattern) :  m_movePattern(Pattern),m_playerSprite(0),m_moving(false),m_speed(150.0f)
+Player::Player(Map* mapManager,std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager* tileMapManager,std::string file,int ID,bool isBot,std::vector<sf::Vector2i> Pattern) :  m_mapManager(0),m_movePattern(Pattern),m_playerSprite(0),m_moving(false),m_speed(150.0f)
 {
+    m_mapManager = mapManager;
     m_tileMapManager = tileMapManager;
     m_playerSprite = new PlayerSprite();
     m_name = name;
@@ -224,27 +227,86 @@ int Player::getFrontType(Direction newDir,TileMapManager* tmap)
 }
 
 
-void Player::moveBot()
+void Player::moveBot()// que pour les obt
 {
     if(m_pos == this->caseToPosition(this->getCaseDir()))
     {
         sf::Vector2i v = m_movePattern.getNextCase();
+        int x = m_posCase.x;
+        int y = m_posCase.y;
+        Direction newDir;
 
-        if(this->getTileMap()->isAccessible(m_posCase.x+v.x,m_posCase.y+v.y))
+        if(v.x == 1)
+            newDir = Direction::EST;
+        if(v.x == -1)
+            newDir = Direction::OUEST;
+        if(v.y == 1)
+            newDir = Direction::SUD;
+        if(v.y == -1)
+            newDir = Direction::NORD;
+
+        if(this->getTileMap()->isAccessible(x+v.x,y+v.y))
         {
             this->getTileMap()->updateEntityCase(getCaseRelative(this->getCase()).x,this->getCaseRelative(this->getCase()).y,0);
             this->addCaseDir(v.x,v.y);
             m_movePattern.add();
             this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCaseDir()).x,this->getCaseRelative(this->getCaseDir()).y,this->getID());
-            if(v.x == 1)
-                this->setNewDir(Direction::EST);
-            if(v.x == -1)
-                this->setNewDir(Direction::OUEST);
-            if(v.y == 1)
-                this->setNewDir(Direction::SUD);
-            if(v.y == -1)
-                this->setNewDir(Direction::NORD);
+            this->setNewDir(newDir);
+
         }
+        else
+        {
+            switch(newDir)
+            {
+            case Direction::EST :
+                if(x+1 > 31*(m_tileMapManager->getTilePos().x+1) && m_mapManager->getTileMap(m_tileMapManager->getTilePos().x+1,m_tileMapManager->getTilePos().y)->isAccessible(x+1,y))
+                {
+                    this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCase()).x,this->getCaseRelative(this->getCase()).y,0);
+                    this->setTileMap(m_mapManager->getTileMap(m_tileMapManager->getTilePos().x+1,m_tileMapManager->getTilePos().y));
+                    this->addCaseDir(1,0);
+                    m_movePattern.add();
+                    this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCaseDir()).x,this->getCaseRelative(this->getCaseDir()).y,this->getID());
+                }
+                break;
+            case Direction::OUEST:
+                if(x-1 < 32*(m_tileMapManager->getTilePos().x) && m_mapManager->getTileMap(m_tileMapManager->getTilePos().x-1,m_tileMapManager->getTilePos().y)->isAccessible(x-1,y))
+                {
+                    this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCase()).x,this->getCaseRelative(this->getCase()).y,0);
+                    this->setTileMap(m_mapManager->getTileMap(m_tileMapManager->getTilePos().x-1,m_tileMapManager->getTilePos().y));
+                    this->addCaseDir(-1,0);
+                    m_movePattern.add();
+                    this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCaseDir()).x,this->getCaseRelative(this->getCaseDir()).y,this->getID());
+                }
+                break;
+            case Direction::NORD :
+                if(y-1 < 32*(m_tileMapManager->getTilePos().y) && m_mapManager->getTileMap(m_tileMapManager->getTilePos().x,m_tileMapManager->getTilePos().y-1)->isAccessible(x,y-1))
+
+                {
+                    this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCase()).x,this->getCaseRelative(this->getCase()).y,0);
+                    this->setTileMap(m_mapManager->getTileMap(m_tileMapManager->getTilePos().x,m_tileMapManager->getTilePos().y-1));
+                    this->addCaseDir(0,-1);
+                    m_movePattern.add();
+                    this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCaseDir()).x,this->getCaseRelative(this->getCaseDir()).y,this->getID());
+                }
+                break;
+            case Direction::SUD :
+                if(y+1 > 31*(1+m_tileMapManager->getTilePos().y) && m_mapManager->getTileMap(m_tileMapManager->getTilePos().x,m_tileMapManager->getTilePos().y+1)->isAccessible(x,y+1))
+                {
+                    this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCase()).x,this->getCaseRelative(this->getCase()).y,0);
+                    this->setTileMap(m_mapManager->getTileMap(m_tileMapManager->getTilePos().x,m_tileMapManager->getTilePos().y+1));
+                    this->addCaseDir(0,1);
+                    m_movePattern.add();
+                    this->getTileMap()->updateEntityCase(this->getCaseRelative(this->getCaseDir()).x,this->getCaseRelative(this->getCaseDir()).y,this->getID());
+                }
+                break;
+
+            }
+
+
+        }
+
+
+
     }
 }
 

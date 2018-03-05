@@ -18,8 +18,8 @@ class Player
 
 public :
 
-    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID,bool isBot);
-    Player(std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID,bool isBot,std::vector<sf::Vector2i> Pattern);
+    Player(Map* mapManager,std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID,bool isBot);
+    Player(Map* mapManager,std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID,bool isBot,std::vector<sf::Vector2i> Pattern);
 
     PlayerSprite getSprite();
     sf::Vector2f getPosition();
@@ -45,6 +45,7 @@ public :
     void setTileMap(TileMapManager* tileMap);
     bool isBot(){return m_bot;}
     void moveBot();
+    Map* getMapManager(){return m_mapManager;}
 
 
 private :
@@ -64,6 +65,7 @@ private :
     Direction m_oldDir;
     bool m_bot;
     MovePattern m_movePattern;
+    Map* m_mapManager;
 
 
 };

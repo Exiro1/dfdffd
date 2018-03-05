@@ -58,13 +58,14 @@ int main()
     std::cout << "creation de l object Map" << std::endl;
 
     Map mapManager;
+    Map* mapPtr(0);
+    mapPtr = &mapManager;
     mapManager.loadMap();
     mapManager.changeCurrentTileMapManager(0,0);
     mapManager.getCurrentTileMapManager()->getTileMap()->setPosition(0,0);
     std::cout << "object TileMapManager ajouté a Map" << std::endl;
-    Player p("Exiro",sf::Vector2i(4,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png",1,false);
-    GameManager gm(&p,&mapManager);
-
+    Player p(mapPtr,"Exiro",sf::Vector2i(29,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png",1,false);
+    GameManager gm(&p,mapPtr);
     Clock clock;
     Time t;
 
@@ -125,9 +126,10 @@ int main()
         for(int i =0; i<gm.getPlayerList().size(); i++)
         {
 
-            if(gm.getPlayerList()[i]->isBot()){
+            if(gm.getPlayerList()[i]->isBot())
+            {
                 gm.getPlayerList()[i]->moveBot();
-                   gm.getPlayerList()[i]->update(t.asSeconds());
+                gm.getPlayerList()[i]->update(t.asSeconds());
             }
             if(gm.getPlayerList()[i]->getTileMap()->isActivated())
             {
@@ -135,7 +137,7 @@ int main()
                 window.draw(gm.getPlayerList()[i]->getSprite());
             }
         }
-t = clock.restart();
+        t = clock.restart();
         window.display();
 
     }

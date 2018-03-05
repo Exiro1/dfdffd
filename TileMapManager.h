@@ -36,6 +36,7 @@ private:
     int m_index; //index de la TileMap dans la Map
     bool m_activated;  // indique si la TileMap
 
+
 };
 
 #endif // TILEMAPMANAGER_H_INCLUDED
