@@ -17,9 +17,11 @@ vector<string> split(string phrase, string delimiter)
     return list;
 }
 
-GameManager::GameManager(Player* p,Map* mapManager) : m_mapManager(0), m_player(0)
+GameManager::GameManager(Player* p,Map* mapManager,sf::RenderWindow* window) : m_window(0) , m_mapManager(0), m_player(0)
 {
 
+   // textManager m_textManager;
+    m_window = window;
     m_mapManager = mapManager;
     m_player = p;
     m_PlayerView = sf::View(sf::FloatRect(0,0,256,192));
@@ -61,11 +63,13 @@ GameManager::GameManager(Player* p,Map* mapManager) : m_mapManager(0), m_player(
                 }
                 cout << pseudo<< " " <<x << " " <<y << " " <<vie << " " <<argent <<" " <<x2 << " " <<y2 << " " <<file << " " <<ID << " " <<bot << endl;
                 m_playerList.push_back(new Player(mapManager,pseudo,sf::Vector2i(x,y),vie,argent,m_mapManager->getTileMapList()[x2][y2],file,ID,bot,patternPlayer));
+                m_playerListMap[ID] = m_playerList.back();
             }
         }
         mapFile.close();
     }
 }
+
 
 
 
@@ -95,11 +99,65 @@ std::vector<Player*> GameManager::getPlayerList()
     return m_playerList;
 }
 
+void GameManager::viewMessageBox(std::string message){
+
+m_rectangleShape.clear();
+m_textToDraw.clear();
+int x = m_PlayerView.getSize().x;
+int y = m_PlayerView.getSize().y;
+
+ int y1 = y - (y/7) - y/100;
+ int x1 = x/100;
+ int y2 = y - y/100;
+ int x2 = x - x/100;
+ std::cout << x << " " << y << std::endl;
+ std::cout << x1 << " " << y1 << std::endl;
+ std::cout << x2 << " " << y2 << std::endl;
+ int relativex = m_player->getPosition().x-(x/2)+x1;
+ int relativey = m_player->getPosition().y-(y/2)+y1;
+ std::cout << relativex << " " << relativey << std::endl;
+
+sf::Font font = m_textManager.getPreloadedFont("basic");
+sf::Text text = m_textManager.createText(font,14,sf::Color::Black,message);
+ // std::cout << "text créé" << std::endl;
+text.setPosition(relativex,relativey);
+cout << text.getPosition().x << " g " << text.getPosition().y << std::endl;
+
+// std::cout << "text créé" << std::endl;
+// m_window->draw(text);
+// std::cout << "text draw" << std::endl;
+ m_textToDraw.push_back(text);
+ //m_window->draw(m_textToDraw.back());
+  //std::cout << "text draw 2" << std::endl;
+sf::RectangleShape rectangle(sf::Vector2f(x2-x1, y2-y1));
+rectangle.setPosition(relativex,relativey);
+rectangle.setFillColor(sf::Color::White);
+m_rectangleShape.push_back(rectangle);
+
+}
+
 void GameManager::update(sf::Time t)
 {
-
     keyboardManager(*m_player,*m_mapManager);
     m_player->update(t.asSeconds());
     m_PlayerView.setCenter(m_player->getPosition());
+}
+
+void GameManager::drawOverLay()
+{
+    for(int i =0;i<m_rectangleShape.size();i++){
+       m_window->draw(m_rectangleShape[i]);
+    }
+    for(int i =0;i<m_textToDraw.size();i++){
+
+       m_window->draw(m_textToDraw[i]);//erreur
+
+    }
 
 }
+
+
+
+
+
+

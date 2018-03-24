@@ -1,6 +1,5 @@
 #include "TileMapManager.h"
 
-
 TileMapManager::~TileMapManager()
 {
 
@@ -16,7 +15,7 @@ TileMapManager::TileMapManager(const std::string& tileset, sf::Vector2u tileSize
         m_TileMap2D.push_back(std::vector<int>(32));
         m_TileMap2DEntity.push_back(std::vector<int>(32));
     }
-    std::cout << "map 2D initilaliseé" << std::endl;
+    //std::cout << "map 2D initilaliseé" << std::endl;
     for(int x=0; x<16; x++)
     {
         for(int y=0; y<16; y++)
@@ -33,10 +32,10 @@ TileMapManager::TileMapManager(const std::string& tileset, sf::Vector2u tileSize
             }
         }
     }
-    std::cout << "map 2d cree" << std::endl;
+    //std::cout << "map 2d cree" << std::endl;
     if(m_tileMap.load(tileset,tileSize,tiles,width,height))
     {
-        std::cout << "object tileMap créé" << std::endl;
+      //  std::cout << "object tileMap créé" << std::endl;
     }
 
 }
@@ -125,6 +124,21 @@ bool TileMapManager::isActivated()
 void TileMapManager::setActivated(bool activated)
 {
     m_activated = activated;
+}
+
+BlockType TileMapManager::getBlockType(int blocknumber){
+  if(blocknumber == 0 || blocknumber == 1 ||blocknumber == 2 ||blocknumber == 3 || blocknumber == 4 || blocknumber == 5)
+    return BlockType::ROAD; //road
+  if(blocknumber == 6)
+    return BlockType::PASSALE; //vide (grass etc...)
+  if(blocknumber == 7)
+    return BlockType::SOLID; //(blcok fix non passable (arbre objet deco...)
+  if(blocknumber == 8 || blocknumber == 9)
+    return BlockType::BUILDING; //(maison , batiment entrable)
+  if(blocknumber >= 1000)
+    return BlockType::PLAYER;//player
+
+    return BlockType::SOLID;
 }
 
 

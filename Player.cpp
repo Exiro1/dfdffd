@@ -18,6 +18,7 @@ Player::Player(Map* mapManager,std::string name,sf::Vector2i posCase,int vie,int
     m_ID = ID;
     m_oldDir = Direction::EST;
     m_bot = isBot;
+    m_isInteracting = false;
     if(m_playerSprite->load(file))
     {
         std::cout << "charger" << std::endl;
@@ -41,6 +42,7 @@ Player::Player(Map* mapManager,std::string name,sf::Vector2i posCase,int vie,int
     m_ID = ID;
     m_oldDir = Direction::EST;
     m_bot = isBot;
+    m_isInteracting = false;
     if(m_playerSprite->load(file))
     {
         std::cout << "charger" << std::endl;
@@ -229,7 +231,7 @@ int Player::getFrontType(Direction newDir,TileMapManager* tmap)
 
 void Player::moveBot()// que pour les obt
 {
-    if(m_pos == this->caseToPosition(this->getCaseDir()))
+    if(m_pos == this->caseToPosition(this->getCaseDir()) && !m_isInteracting)
     {
         sf::Vector2i v = m_movePattern.getNextCase();
         int x = m_posCase.x;
@@ -308,6 +310,14 @@ void Player::moveBot()// que pour les obt
 
 
     }
+}
+
+void Player::actionByBlocking(int blockType)
+{
+ BlockType block = TileMapManager::getBlockType(blockType);
+ if(block == BlockType::PLAYER){
+
+ }
 }
 
 

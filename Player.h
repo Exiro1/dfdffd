@@ -1,21 +1,21 @@
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 
-//
 #include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "PlayerSprite.h"
 #include "TileMapManager.h"
 #include "Map.h"
+#include "GameManager.h"
 #include "SFML/Window.hpp"
 #include "MovePattern.h"
 
 enum class Direction {EST,OUEST,NORD,SUD};
 
+class GameManager;
 class Player
 {
-
 public :
 
     Player(Map* mapManager,std::string name,sf::Vector2i posCase,int vie,int argent,TileMapManager *tileMapManager,std::string file,int ID,bool isBot);
@@ -46,7 +46,12 @@ public :
     bool isBot(){return m_bot;}
     void moveBot();
     Map* getMapManager(){return m_mapManager;}
-
+    void actionByBlocking(int blockType); //executer quand le joueur est bloqué;
+    void setGameManager(GameManager* gm){m_gameManager = gm;}
+    GameManager* getGameManager(){return m_gameManager;}
+    std::string getPseudo(){return m_name;}
+    bool isInteracting(){return m_isInteracting;}
+    void setInteracting(bool interact){m_isInteracting = interact;}
 
 private :
 
@@ -66,6 +71,8 @@ private :
     bool m_bot;
     MovePattern m_movePattern;
     Map* m_mapManager;
+    GameManager* m_gameManager;
+    bool m_isInteracting;
 
 
 };

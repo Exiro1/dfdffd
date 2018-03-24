@@ -6,6 +6,92 @@ using namespace sf;
 void actionManager(Player &player,Map &mapManager)
 {
 
+
+    if(Keyboard::isKeyPressed(Keyboard::E))
+    {
+
+        Direction dir = player.getOldDir();
+        int xmap;
+        int ymap;
+        switch(dir)
+        {
+        case Direction::EST:
+            xmap = (player.getCase().x+1)/32;
+            ymap = (player.getCase().y)/32;
+            break;
+        case Direction::OUEST:
+            xmap = (player.getCase().x-1)/32;
+            ymap = (player.getCase().y)/32;
+            break;
+        case Direction::SUD:
+            xmap = (player.getCase().x)/32;
+            ymap = (player.getCase().y+1)/32;
+            break;
+        case Direction::NORD:
+            xmap = (player.getCase().x)/32;
+            ymap = (player.getCase().y-1)/32;
+
+            break;
+        }
+        int type = player.getFrontType(player.getOldDir(),mapManager.getTileMap(xmap,ymap));
+        BlockType block = TileMapManager::getBlockType(type);
+        if(block == BlockType::PLAYER)
+        {
+            Player* p = player.getGameManager()->getMapPlayer()[type];
+            if(!player.isInteracting()){
+            std::cout << "Interact with " << p->getPseudo()<< std::endl;
+            player.getGameManager()->viewMessageBox("Juif Lambda : Bonjour mon furher!");
+            p->setInteracting(true);
+            player.setInteracting(true);
+            }/*else{
+            std::cout << "stop interact with " << p->getPseudo()<< std::endl;
+            p->setInteracting(false);
+            player.setInteracting(false);
+            player.getGameManager()->getTextBox().clear();
+            std::cout <<  player.getGameManager()->getTextBox().size()<< std::endl;
+            }*/
+        }
+
+    }else if(Keyboard::isKeyPressed(Keyboard::D) || Keyboard::isKeyPressed(Keyboard::Z) || Keyboard::isKeyPressed(Keyboard::Q) || Keyboard::isKeyPressed(Keyboard::S))
+    {
+        if(player.isInteracting()){ //pour arreter l'interaction
+        Direction dir = player.getOldDir();
+        int xmap;
+        int ymap;
+        switch(dir)
+        {
+        case Direction::EST:
+            xmap = (player.getCase().x+1)/32;
+            ymap = (player.getCase().y)/32;
+            break;
+        case Direction::OUEST:
+            xmap = (player.getCase().x-1)/32;
+            ymap = (player.getCase().y)/32;
+            break;
+        case Direction::SUD:
+            xmap = (player.getCase().x)/32;
+            ymap = (player.getCase().y+1)/32;
+            break;
+        case Direction::NORD:
+            xmap = (player.getCase().x)/32;
+            ymap = (player.getCase().y-1)/32;
+
+            break;
+        }
+        int type = player.getFrontType(player.getOldDir(),mapManager.getTileMap(xmap,ymap));
+        BlockType block = TileMapManager::getBlockType(type);
+        if(block == BlockType::PLAYER)
+        {
+            Player* pToInteract = player.getGameManager()->getMapPlayer()[type];
+            std::cout << "stop interact with " << pToInteract->getPseudo()<< std::endl;
+            pToInteract->setInteracting(false);
+            player.setInteracting(false);
+            player.getGameManager()->getTextBox()->clear();
+            player.getGameManager()->getTextToDraw()->clear();
+            std::cout <<  player.getGameManager()->getTextBox()->size()<< std::endl;
+            }
+        }
+    }
 }
 void keyboardManager(Player &player,Map &mapManager)
 {
@@ -24,7 +110,7 @@ void movementManager(Player &player,Map &mapManager)
         int x = player.getCase().x;
         int y = player.getCase().y;
 
-        if(Keyboard::isKeyPressed(Keyboard::Right) )
+        if(Keyboard::isKeyPressed(Keyboard::D) )
         {
             newDir = Direction::EST ;
             if(mapManager.getCurrentTileMapManager()->isAccessible(x+1,y))//case accesible (sur la current tilemap
@@ -45,10 +131,10 @@ void movementManager(Player &player,Map &mapManager)
             {
                 int xmap = (player.getCase().x+1)/32;
                 int ymap = (player.getCase().y)/32;
-                std::cout << " front "<< player.getFrontType(newDir,mapManager.getTileMap(xmap,ymap)) << std::endl;
+                player.actionByBlocking(player.getFrontType(newDir,mapManager.getTileMap(xmap,ymap)));
             }
         }
-        else if(Keyboard::isKeyPressed(Keyboard::Left))
+        else if(Keyboard::isKeyPressed(Keyboard::Q))
         {
             newDir = Direction::OUEST;
             if(mapManager.getCurrentTileMapManager()->isAccessible(x-1,y))
@@ -70,10 +156,10 @@ void movementManager(Player &player,Map &mapManager)
             {
                 int xmap = (player.getCase().x-1)/32;
                 int ymap = (player.getCase().y)/32;
-                std::cout << " front "<< player.getFrontType(newDir,mapManager.getTileMap(xmap,ymap)) << std::endl;
+                player.actionByBlocking(player.getFrontType(newDir,mapManager.getTileMap(xmap,ymap)));
             }
         }
-        else if(Keyboard::isKeyPressed(Keyboard::Down))
+        else if(Keyboard::isKeyPressed(Keyboard::S))
         {
             newDir = Direction::SUD;
             if(mapManager.getCurrentTileMapManager()->isAccessible(x,y+1))
@@ -94,10 +180,10 @@ void movementManager(Player &player,Map &mapManager)
             {
                 int xmap = (player.getCase().x)/32;
                 int ymap = (player.getCase().y+1)/32;
-                std::cout << " front "<< player.getFrontType(newDir,mapManager.getTileMap(xmap,ymap)) << std::endl;
+                player.actionByBlocking(player.getFrontType(newDir,mapManager.getTileMap(xmap,ymap)));
             }
         }
-        else if(Keyboard::isKeyPressed(Keyboard::Up))
+        else if(Keyboard::isKeyPressed(Keyboard::Z))
         {
             newDir = Direction::NORD;
             if(mapManager.getCurrentTileMapManager()->isAccessible(x,y-1))
@@ -118,7 +204,8 @@ void movementManager(Player &player,Map &mapManager)
             {
                 int xmap = (player.getCase().x)/32;
                 int ymap = (player.getCase().y-1)/32;
-                std::cout << " front "<< player.getFrontType(newDir,mapManager.getTileMap(xmap,ymap)) << std::endl;
+
+                player.actionByBlocking(player.getFrontType(newDir,mapManager.getTileMap(xmap,ymap)));
             }
         }
     }

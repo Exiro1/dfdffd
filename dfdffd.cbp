@@ -69,6 +69,8 @@
 		<Unit filename="TileMapManager.cpp" />
 		<Unit filename="TileMapManager.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="textManager.cpp" />
+		<Unit filename="textManager.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

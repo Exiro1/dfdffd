@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include "GameManager.h"
+#include "textManager.h"
 
 using namespace sf;
 
@@ -43,6 +44,8 @@ using namespace sf;
 
 Direction manageDir(Player &player,Map &mapManager,Direction newDir);
 
+static int tes = 2;
+
 int main()
 {
     RenderWindow window;
@@ -52,6 +55,8 @@ int main()
     window.create(videoMode,"SHOAH III");
     window.setPosition(Vector2i(0,0));
     window.setFramerateLimit(144);
+    window.setMouseCursorVisible(false);
+    window.setVerticalSyncEnabled(true);
     std::cout << "Fenetre créé" << std::endl;
     float speed = 100;
 
@@ -64,10 +69,15 @@ int main()
     mapManager.changeCurrentTileMapManager(0,0);
     mapManager.getCurrentTileMapManager()->getTileMap()->setPosition(0,0);
     std::cout << "object TileMapManager ajouté a Map" << std::endl;
-    Player p(mapPtr,"Exiro",sf::Vector2i(29,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png",1,false);
-    GameManager gm(&p,mapPtr);
+    Player p(mapPtr,"Exiro",sf::Vector2i(6,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png",1,false);
+    RenderWindow* windowPtr(0);
+    windowPtr = &window;
+    GameManager gm(&p,mapPtr,windowPtr);
+    p.setGameManager(&gm);
     Clock clock;
     Time t;
+
+
 
     //Player player("Exiro",sf::Vector2i(4,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png");
 
@@ -93,10 +103,11 @@ int main()
         //   player.update(t.asSeconds());
 
         //  view1.setCenter(player.getPosition());
-        gm.update(t);
+
 
 
         window.clear();
+        gm.update(t);
         window.setView(*gm.getView());
 
         gm.getMapManager()->checkVisibility(gm.getPlayer()->getPosition().x,gm.getPlayer()->getPosition().y); // ajoute les tiles visible
@@ -137,6 +148,8 @@ int main()
                 window.draw(gm.getPlayerList()[i]->getSprite());
             }
         }
+
+        gm.drawOverLay();
         t = clock.restart();
         window.display();
 

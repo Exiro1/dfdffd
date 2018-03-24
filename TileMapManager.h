@@ -5,6 +5,10 @@
 #include <string>
 #include <iostream>
 #include <vector>
+
+enum BlockType{ROAD = 0 ,PASSALE = 1 ,SOLID = 2,BUILDING = 3,PLAYER = 4};
+
+
 class TileMapManager
 {
 
@@ -24,6 +28,7 @@ public :
     bool isActivated();
     void setActivated(bool activated);
     void updateEntityCase(int x,int y,int type); //change le type a la location [x,y] de la map2D des entité par "type"
+    static BlockType getBlockType(int blcokNumber);
 
 private:
 
