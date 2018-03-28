@@ -3,13 +3,23 @@
 
 using namespace sf;
 
-void actionManager(Player &player,Map &mapManager)
+
+InputManager::InputManager(){
+    m_keyMap[Keyboard::E] = false;
+}
+
+InputManager::~InputManager(){
+}
+
+void InputManager::actionManager(Player &player,Map &mapManager)
 {
 
 
-    if(Keyboard::isKeyPressed(Keyboard::E))
-    {
 
+    if(Keyboard::isKeyPressed(Keyboard::E) && !m_keyMap[Keyboard::E])
+    {
+        std::cout << "touche E appuye" << std::endl;
+        m_keyMap[Keyboard::E] = true;
         Direction dir = player.getOldDir();
         int xmap;
         int ymap;
@@ -40,16 +50,22 @@ void actionManager(Player &player,Map &mapManager)
             Player* p = player.getGameManager()->getMapPlayer()[type];
             if(!player.isInteracting()){
             std::cout << "Interact with " << p->getPseudo()<< std::endl;
-            player.getGameManager()->viewMessageBox("Juif Lambda : Bonjour mon furher!");
+            player.getGameManager()->viewMessageBox(player.getGameManager()->getTextManager()->getNextText(p->getID()));
             p->setInteracting(true);
             player.setInteracting(true);
-            }/*else{
-            std::cout << "stop interact with " << p->getPseudo()<< std::endl;
+            }else{
+            // continuer a parler ou arreter le dialogue (si dialogue finit
+            std::string text = player.getGameManager()->getTextManager()->getNextText(p->getID());
+            if(text == "EOF"){
             p->setInteracting(false);
             player.setInteracting(false);
-            player.getGameManager()->getTextBox().clear();
-            std::cout <<  player.getGameManager()->getTextBox().size()<< std::endl;
-            }*/
+            player.getGameManager()->getTextBox()->clear();
+            player.getGameManager()->getTextToDraw()->clear();
+            }else{
+                std::cout << "no EOF"<< std::endl;
+            player.getGameManager()->viewMessageBox(text);
+            }
+            }
         }
 
     }else if(Keyboard::isKeyPressed(Keyboard::D) || Keyboard::isKeyPressed(Keyboard::Z) || Keyboard::isKeyPressed(Keyboard::Q) || Keyboard::isKeyPressed(Keyboard::S))
@@ -92,15 +108,19 @@ void actionManager(Player &player,Map &mapManager)
             }
         }
     }
+
+    if(!Keyboard::isKeyPressed(Keyboard::E)){
+    m_keyMap[Keyboard::E] = false;
+    }
 }
-void keyboardManager(Player &player,Map &mapManager)
+void InputManager::keyboardManager(Player &player,Map &mapManager)
 {
     actionManager(player,mapManager);
     movementManager(player,mapManager);
 
 }
 
-void movementManager(Player &player,Map &mapManager)
+void InputManager::movementManager(Player &player,Map &mapManager)
 {
 
     Direction newDir = player.getOldDir();

@@ -9,13 +9,13 @@
 #include <unordered_map>
 #include "textManager.h"
 class Player;
+class InputManager;
 class GameManager
 {
 public:
 
     GameManager(Player *player,Map *mapManager,sf::RenderWindow* window);
     ~GameManager();
-
     Player* getPlayer();
     Map* getMapManager();
     sf::View* getView();
@@ -26,6 +26,7 @@ public:
      std::vector<sf::Text>* getTextToDraw(){return &m_textToDraw;}
      std::unordered_map<int, Player*> getMapPlayer(){return m_playerListMap;}// list of player
      void drawOverLay();
+     textManager* getTextManager(){return m_textManager;}
 
 protected:
 
@@ -41,7 +42,8 @@ private:
     std::vector<sf::RectangleShape> m_rectangleShape;
     std::vector<sf::Text> m_textToDraw;
     sf::RenderWindow* m_window;
-    textManager m_textManager;
+    textManager* m_textManager;
+    InputManager* m_inputManager;
 
 
 };

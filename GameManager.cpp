@@ -2,7 +2,7 @@
 
 using namespace std;
 
-vector<string> split(string phrase, string delimiter)
+/*vector<string> split(string phrase, string delimiter)
 {
     vector<string> list;
     string s = phrase;
@@ -15,7 +15,7 @@ vector<string> split(string phrase, string delimiter)
         s.erase(0, pos + delimiter.length());
     }
     return list;
-}
+}*/
 
 GameManager::GameManager(Player* p,Map* mapManager,sf::RenderWindow* window) : m_window(0) , m_mapManager(0), m_player(0)
 {
@@ -25,6 +25,8 @@ GameManager::GameManager(Player* p,Map* mapManager,sf::RenderWindow* window) : m
     m_mapManager = mapManager;
     m_player = p;
     m_PlayerView = sf::View(sf::FloatRect(0,0,256,192));
+    m_inputManager = new InputManager;
+    m_textManager = new textManager;
 
     //File structure pseudo;x;y;x2;y2;vie;argent;file;ID;bot(1/0);1,0/1,0/...
     ifstream mapFile("File/PlayerPackage.dp",std::ios::in);
@@ -40,7 +42,7 @@ GameManager::GameManager(Player* p,Map* mapManager,sf::RenderWindow* window) : m
             string line;
             while(getline(mapFile, line))
             {
-                vector<string> list = split(line,";");
+                vector<string> list = textManager::split(line,";");
                 string pseudo = list[0];
                 int x = stoi(list[1]);
                 int y = stoi(list[2]);
@@ -53,11 +55,11 @@ GameManager::GameManager(Player* p,Map* mapManager,sf::RenderWindow* window) : m
                 bool bot = true;
 
                 std::vector< sf::Vector2i> patternPlayer;
-                vector<string> pattern = split(list[10],"/");
+                vector<string> pattern = textManager::split(list[10],"/");
                 for(int i =0; i<pattern.size(); i++)
                 {
 
-                    vector<string> coord = split(pattern[i],",");
+                    vector<string> coord = textManager::split(pattern[i],",");
 
                     patternPlayer.push_back(sf::Vector2i(stoi(coord[0]),stoi(coord[1])));
                 }
@@ -67,6 +69,7 @@ GameManager::GameManager(Player* p,Map* mapManager,sf::RenderWindow* window) : m
             }
         }
         mapFile.close();
+        //m_textManager.openNewTextByID(10);
     }
 }
 
@@ -80,6 +83,10 @@ GameManager::~GameManager()
         delete m_playerList[i];
         m_playerList[i] = 0;
     }
+    delete m_inputManager;
+    m_inputManager = 0;
+    delete m_textManager;
+    m_textManager = 0;
 }
 
 Player* GameManager::getPlayer()
@@ -117,18 +124,12 @@ int y = m_PlayerView.getSize().y;
  int relativey = m_player->getPosition().y-(y/2)+y1;
  std::cout << relativex << " " << relativey << std::endl;
 
-sf::Font font = m_textManager.getPreloadedFont("basic");
-sf::Text text = m_textManager.createText(font,14,sf::Color::Black,message);
- // std::cout << "text créé" << std::endl;
-text.setPosition(relativex,relativey);
-cout << text.getPosition().x << " g " << text.getPosition().y << std::endl;
+sf::Font font = m_textManager->getPreloadedFont("8bit");
+sf::Text text = m_textManager->createText("8bit",18,sf::Color::Black,message);
 
-// std::cout << "text créé" << std::endl;
-// m_window->draw(text);
-// std::cout << "text draw" << std::endl;
- m_textToDraw.push_back(text);
- //m_window->draw(m_textToDraw.back());
-  //std::cout << "text draw 2" << std::endl;
+text.setPosition(relativex,relativey);
+m_textToDraw.push_back(text);
+
 sf::RectangleShape rectangle(sf::Vector2f(x2-x1, y2-y1));
 rectangle.setPosition(relativex,relativey);
 rectangle.setFillColor(sf::Color::White);
@@ -138,7 +139,7 @@ m_rectangleShape.push_back(rectangle);
 
 void GameManager::update(sf::Time t)
 {
-    keyboardManager(*m_player,*m_mapManager);
+    m_inputManager->keyboardManager(*m_player,*m_mapManager);
     m_player->update(t.asSeconds());
     m_PlayerView.setCenter(m_player->getPosition());
 }
