@@ -454,7 +454,7 @@
 	<fstream>
 	"SFML/Graphics.hpp"
 
-1522258673 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.cpp
+1524167696 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.cpp
 	"InputManager.h"
 
 1522181763 c:\users\cococ\desktop\dev\c-c++\dfdffd\inputmanager.h
@@ -1649,10 +1649,10 @@
 1520197879 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\movepattern.cpp
 	"MovePattern.h"
 
-1522258927 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\textmanager.cpp
+1522513534 source:c:\users\cococ\desktop\dev\c-c++\dfdffd\textmanager.cpp
 	"textManager.h"
 
-1522256957 c:\users\cococ\desktop\dev\c-c++\dfdffd\textmanager.h
+1522513544 c:\users\cococ\desktop\dev\c-c++\dfdffd\textmanager.h
 	<SFML/Graphics.hpp>
 	<iostream>
 	<unordered_map>

@@ -23,24 +23,28 @@ void InputManager::actionManager(Player &player,Map &mapManager)
         Direction dir = player.getOldDir();
         int xmap;
         int ymap;
+        Direction opposite;
         switch(dir)
         {
         case Direction::EST:
             xmap = (player.getCase().x+1)/32;
             ymap = (player.getCase().y)/32;
+            opposite = Direction::OUEST;
             break;
         case Direction::OUEST:
             xmap = (player.getCase().x-1)/32;
             ymap = (player.getCase().y)/32;
+            opposite = Direction::EST;
             break;
         case Direction::SUD:
             xmap = (player.getCase().x)/32;
             ymap = (player.getCase().y+1)/32;
+            opposite = Direction::NORD;
             break;
         case Direction::NORD:
             xmap = (player.getCase().x)/32;
             ymap = (player.getCase().y-1)/32;
-
+            opposite = Direction::SUD;
             break;
         }
         int type = player.getFrontType(player.getOldDir(),mapManager.getTileMap(xmap,ymap));
@@ -50,17 +54,19 @@ void InputManager::actionManager(Player &player,Map &mapManager)
             Player* p = player.getGameManager()->getMapPlayer()[type];
             if(!player.isInteracting()){
             std::cout << "Interact with " << p->getPseudo()<< std::endl;
-            player.getGameManager()->viewMessageBox(player.getGameManager()->getTextManager()->getNextText(p->getID()));
+            player.getGameManager()->viewMessageBox(player.getGameManager()->getTextManager()->getNextText(p->getID(),p->getPseudo()));
             p->setInteracting(true);
             player.setInteracting(true);
+            p->setNewDir(opposite);
             }else{
             // continuer a parler ou arreter le dialogue (si dialogue finit
-            std::string text = player.getGameManager()->getTextManager()->getNextText(p->getID());
+            std::string text = player.getGameManager()->getTextManager()->getNextText(p->getID(),p->getPseudo());
             if(text == "EOF"){
             p->setInteracting(false);
             player.setInteracting(false);
             player.getGameManager()->getTextBox()->clear();
             player.getGameManager()->getTextToDraw()->clear();
+            player.getGameManager()->getTextManager()->reset();
             }else{
                 std::cout << "no EOF"<< std::endl;
             player.getGameManager()->viewMessageBox(text);
@@ -102,6 +108,7 @@ void InputManager::actionManager(Player &player,Map &mapManager)
             std::cout << "stop interact with " << pToInteract->getPseudo()<< std::endl;
             pToInteract->setInteracting(false);
             player.setInteracting(false);
+            player.getGameManager()->getTextManager()->reset();
             player.getGameManager()->getTextBox()->clear();
             player.getGameManager()->getTextToDraw()->clear();
             std::cout <<  player.getGameManager()->getTextBox()->size()<< std::endl;

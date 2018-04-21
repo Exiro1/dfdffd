@@ -71,7 +71,7 @@ sf::Text textManager::createText(std::string font,int charsize,sf::Color color,s
     text.setFillColor(color);
     return text;
 }
-std::string textManager::getNextText(int ID)
+std::string textManager::getNextText(int ID,std::string pseudo)
 {
     if(ID == m_ID)
     {
@@ -88,16 +88,19 @@ std::string textManager::getNextText(int ID)
     }
     else
     {
-        openNewTextByID(ID);
+        openNewTextByID(ID,pseudo);
         return m_currentTextSplittedbySize[0];
     }
 }
+void textManager::reset(){
+m_ID = 0;
+}
 
-void textManager::openNewTextByID(int ID)
+void textManager::openNewTextByID(int ID,std::string pseudo)
 {
     m_ID = ID;
     std::string textLoaded = m_allTextMap[ID];
-    m_currentText = textLoaded;
+    m_currentText = pseudo +": "+ textLoaded;
 
     m_currentTextSplitted = split(m_currentText," ");
 

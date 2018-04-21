@@ -14,9 +14,10 @@ public:
     sf::Font loadFont(std::string font);
     sf::Text createText(std::string font,int charSize,sf::Color,std::string text);
     sf::Font getPreloadedFont(std::string font){return m_preLoadedFont[font];}
-    void openNewTextByID(int ID);
-    std::string getNextText(int ID);
+    void openNewTextByID(int ID,std::string pseudo);
+    std::string getNextText(int ID,std::string pseudo);
     static std::vector<std::string> split(std::string phrase, std::string delimiter);
+    void reset();
 protected:
 
 private:
