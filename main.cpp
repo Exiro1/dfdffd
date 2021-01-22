@@ -52,12 +52,12 @@ int main()
 
     CircleShape cercle;
     VideoMode videoMode(800,600);
-    window.create(videoMode,"SHOAH III");
+    window.create(videoMode,"Test");
     window.setPosition(Vector2i(0,0));
     window.setFramerateLimit(144);
     window.setMouseCursorVisible(false);
     window.setVerticalSyncEnabled(true);
-    std::cout << "Fenetre créé" << std::endl;
+    std::cout << "Fenetre crÃ©Ã©" << std::endl;
     float speed = 100;
 
     std::cout << "creation de l object Map" << std::endl;
@@ -68,7 +68,7 @@ int main()
     mapManager.loadMap();
     mapManager.changeCurrentTileMapManager(0,0);
     mapManager.getCurrentTileMapManager()->getTileMap()->setPosition(0,0);
-    std::cout << "object TileMapManager ajouté a Map" << std::endl;
+    std::cout << "object TileMapManager ajoutÃ© a Map" << std::endl;
     Player p(mapPtr,"Exiro",sf::Vector2i(6,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png",1,false);
     RenderWindow* windowPtr(0);
     windowPtr = &window;
@@ -82,7 +82,7 @@ int main()
     //Player player("Exiro",sf::Vector2i(4,2),100,100,mapManager.getCurrentTileMapManager(),"File/perso.png");
 
 
-    std::cout << "joueurs créés" << std::endl;
+    std::cout << "joueurs crÃ©Ã©s" << std::endl;
 
 
     gm.getMapManager()->getCurrentTileMapManager()->getTileMap()->setOrigin(0,0);
